@@ -5,15 +5,14 @@
 // Init .env vars
 require("dotenv").config();
 
-const { PORT, MONGODB_URI } = process.env;
-// const PORT = process.env.PORT
-// const MONGODB_URI = process.env.MONGODB_URI
+const { PORT, MONGO_KEY } = process.env;
 
 const express = require("express");
 const app = express();
 
 // Add in mongoose
 const mongoose = require('mongoose');
+mongoose.connect(MONGO_KEY)
 
 // My controllers 
 const peopleController = require('./controllers/people-controller')
@@ -28,13 +27,13 @@ const morgan = require("morgan");
 
 // Connection Events
 mongoose.connection
-  .on("open", () => console.log("This is my awesome amazing connection man"))
-  .on("close", () => console.log("Your are disconnected from mongoose :'("))
+  .on("open", () => console.log("This is my awesome amazing connection"))
+  .on("close", () => console.log("You are disconnected from mongoose :'("))
   .on("error", (error) => console.log(error));
 
 
 ///////////////////////////////
-// MIDDLEWEAR
+// MIDDLEWARE
 ////////////////////////////////
 app.use(express.json()); //parse json
 app.use(cors()); //We now pray to whatever higher power or God we have that this works
